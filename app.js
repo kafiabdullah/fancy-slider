@@ -56,7 +56,7 @@ const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
   // problem 5: toggler to slider images remove
-  //let item = sliders.indexOf(img);
+  let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
