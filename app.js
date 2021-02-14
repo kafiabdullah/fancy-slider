@@ -151,7 +151,7 @@ const eventMethod = (event) => {
     const search = document.getElementById("search");
     getImages(search.value);
     sliders.length = 0;
-  }, 1000);
+  }, 1500);
 };
 
 // Keyboard Enter method
@@ -187,6 +187,6 @@ const enableLoader = () => {
   loader.setAttribute("alt", "Loader");
   loader.style.width = "100px";
   loader.style.height = "100px";
-
+  
   return loader;
 };

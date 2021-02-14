@@ -64,3 +64,11 @@ img {
     width: 90%;
   }
 }
+
+/* extra CSS */
+.search-input{
+    width: 430px !important;
+}
+.search-button{
+    margin: 8px 0px 0 5px;
+}
