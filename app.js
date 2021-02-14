@@ -71,11 +71,13 @@ const createSlider = () => {
   imagesArea.style.display = 'none';
   // Problem 2: bug is spelling mistake in HTML file was : "doration"
   // fixed bug "doration" to "duration"
-  const duration = document.getElementById('duration').value || 1000;
+  let duration = document.getElementById('duration').value || 1000;
 
   // problem 3: Negative duration time fixed
   // fixed with Negative value in slider duration
-  if (duration <= 0) {
+  if(duration <= 0) {
+    // if input duration is Negative
+    // then slider duration will be default as 1second 
     duration = 1000;
 }
   sliders.forEach(slide => {
