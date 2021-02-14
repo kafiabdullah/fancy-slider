@@ -2,6 +2,8 @@ const imagesArea = document.querySelector('.images');
 const gallery = document.querySelector('.gallery');
 const galleryHeader = document.querySelector('.gallery-header');
 const searchBtn = document.getElementById('search-btn');
+// search form 
+const imagesSearchForm = document.getElementById('images-search-form');
 const sliderBtn = document.getElementById('create-slider');
 const sliderContainer = document.getElementById('sliders');
 // selected image 
@@ -33,20 +35,33 @@ const getImages = (query) => {
     .then(response => response.json())
     // problem 1: bug is spelling mistake "hitS"
     // fixed bug with correct spelling "hits"
-    .then(data => showImages(data.hits))
-    .catch(err => console.log(err))
-}
+    .then(data => {
+      // Extra Card Feature 
+      // the property name is invalid if you give wrong input
+      if (data.hits.length <= 0) {
+        const card = invalidSearchCardMessage(
+          "Sorry no image found on your given search name"
+        );
+        console.log(card);
+        gallery.innerHTML = card;
+        return;
+      }
+      showImages(data.hits);
+    })
+    .catch((err) => console.log(err));
+};
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
   element.classList.add('added');
- 
-  let item = sliders.indexOf(img);
+  // problem 5: toggler to slider images remove
+  //let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    // remove images from slider when clicked the image
+    sliders.pop(img);
   }
 }
 var timer
@@ -75,11 +90,11 @@ const createSlider = () => {
 
   // problem 3: Negative duration time fixed
   // fixed with Negative value in slider duration
-  if(duration <= 0) {
+  if (duration <= 0) {
     // if input duration is Negative
     // then slider duration will be default as 1second 
     duration = 1000;
-}
+  }
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -121,14 +136,57 @@ const changeSlide = (index) => {
   items[index].style.display = "block"
 }
 
-searchBtn.addEventListener('click', function () {
-  document.querySelector('.main').style.display = 'none';
-  clearInterval(timer);
-  const search = document.getElementById('search');
-  getImages(search.value)
-  sliders.length = 0;
-})
+// problem 4: add keyboard Enter to search feature
+const eventMethod = (event) => {
+  event.preventDefault();
+
+  const loader = enableLoader();
+  console.log(loader);
+  gallery.appendChild(loader);
+
+  // Enable Loader
+  setTimeout(function () {
+    document.querySelector(".main").style.display = "none";
+    clearInterval(timer);
+    const search = document.getElementById("search");
+    getImages(search.value);
+    sliders.length = 0;
+  }, 1000);
+};
+
+// Keyboard Enter method
+searchBtn.addEventListener("click", eventMethod, false);
+imagesSearchForm.addEventListener("submit", eventMethod, false);
+
 
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+
+// Helper function for create card message
+// Extra feature for create a message in a card
+// if your search input dose not match then card message show a text
+const invalidSearchCardMessage = (message) => {
+  return `
+      <div class="card">
+          <div class="card-body text-center">
+              <h2>${message}</h2>
+          </div>
+      </div>
+  `;
+};
+
+// extra feature loading function
+const enableLoader = () => {
+  gallery.innerHTML = "";
+  galleryHeader.style.display = "none";
+
+  var loader = document.createElement("IMG");
+  loader.setAttribute("src", "loader.gif");
+  loader.setAttribute("alt", "Loader");
+  loader.style.width = "100px";
+  loader.style.height = "100px";
+
+  return loader;
+};
