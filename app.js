@@ -31,6 +31,8 @@ const showImages = (images) => {
 const getImages = (query) => {
   fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
     .then(response => response.json())
+    // problem 1: bug is spelling mistake "hitS"
+    // fixed bug with correct spelling "hits"
     .then(data => showImages(data.hitS))
     .catch(err => console.log(err))
 }
