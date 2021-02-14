@@ -143,6 +143,8 @@ const eventMethod = (event) => {
   const loader = enableLoader();
   console.log(loader);
   gallery.appendChild(loader);
+  // loader css
+  loader.style.alignContent = "center";
 
   // Enable Loader
   setTimeout(function () {
@@ -185,8 +187,10 @@ const enableLoader = () => {
   var loader = document.createElement("IMG");
   loader.setAttribute("src", "loader.gif");
   loader.setAttribute("alt", "Loader");
+  // loader image style
   loader.style.width = "100px";
   loader.style.height = "100px";
+  loader.style.alignItems = "center";
   
   return loader;
 };
