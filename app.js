@@ -153,7 +153,7 @@ const eventMethod = (event) => {
     const search = document.getElementById("search");
     getImages(search.value);
     sliders.length = 0;
-  }, 1500);
+  }, 1200);
 };
 
 // Keyboard Enter method
