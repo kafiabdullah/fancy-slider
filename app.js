@@ -33,7 +33,7 @@ const getImages = (query) => {
     .then(response => response.json())
     // problem 1: bug is spelling mistake "hitS"
     // fixed bug with correct spelling "hits"
-    .then(data => showImages(data.hitS))
+    .then(data => showImages(data.hits))
     .catch(err => console.log(err))
 }
 
@@ -69,7 +69,15 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
+  // Problem 2: bug is spelling mistake in HTML file was : "doration"
+  // fixed bug "doration" to "duration"
   const duration = document.getElementById('duration').value || 1000;
+
+  // problem 3: Negative duration time fixed
+  // fixed with Negative value in slider duration
+  if (duration <= 0) {
+    duration = 1000;
+}
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
